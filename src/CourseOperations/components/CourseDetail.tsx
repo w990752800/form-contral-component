@@ -113,7 +113,7 @@ const CourseDetail: React.FC<Props> = ({
               value={state.name}
               className=" flex-1 overflow-hidden"
               size="large"
-              maxLength={30}
+              maxLength={20}
               showCount
               onChange={(e) => {
                 setState({
@@ -142,7 +142,7 @@ const CourseDetail: React.FC<Props> = ({
               value={state.alias}
               className=" flex-1 overflow-hidden"
               size="large"
-              maxLength={30}
+              maxLength={20}
               showCount
               onChange={(e) => {
                 setState({

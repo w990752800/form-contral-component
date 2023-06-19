@@ -67,7 +67,7 @@ const CreateCourse: React.FC<Props> = ({
             rules={[{ required: true, message: '请输入课程名称！' }]}
           >
             <Input
-              maxLength={30}
+              maxLength={20}
               showCount
               allowClear
               placeholder="请输入课程名称"
@@ -77,7 +77,7 @@ const CreateCourse: React.FC<Props> = ({
         <Col span={12}>
           <Form.Item label="别名" name="alias">
             <Input
-              maxLength={30}
+              maxLength={20}
               showCount
               allowClear
               placeholder="请输入课程别名"
@@ -220,9 +220,10 @@ const CreateCourse: React.FC<Props> = ({
               </Select.Option>
             </Select>
           </Form.Item>
+          <Form.Item label="简介" name="description">
+            <Input.TextArea placeholder="请输入简介" rows={4} allowClear />
+          </Form.Item>
         </Col>
-      </Row>
-      <Row gutter={16}>
         <Col span={12}>
           <Form.Item label="封面">
             <Spin spinning={uploadImgLoading}>
@@ -256,20 +257,6 @@ const CreateCourse: React.FC<Props> = ({
             </Spin>
           </Form.Item>
         </Col>
-        <Col span={12}>
-          <Form.Item label="简介" name="description">
-            <Input.TextArea placeholder="请输入简介" rows={4} allowClear />
-          </Form.Item>
-        </Col>
-      </Row>
-      <Row gutter={16}></Row>
-      <Row gutter={16}>
-        <Col span={12}></Col>
-        <Col span={12}></Col>
-      </Row>
-      <Row gutter={16}>
-        <Col span={12}></Col>
-        <Col span={12}></Col>
       </Row>
       <Row>
         <Col

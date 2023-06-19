@@ -257,7 +257,10 @@ const useCourseTree = ({
     });
   };
 
-  const createSection = async (name: string) => {
+  const createSection = async (fileName: string) => {
+    const index = fileName.lastIndexOf('.');
+    const name = index !== -1 ? fileName.slice(0, index) : fileName;
+
     if (!courseDetail.lessons.length) {
       // 创建章节
       const {
