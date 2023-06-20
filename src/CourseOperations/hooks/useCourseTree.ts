@@ -331,20 +331,17 @@ const useCourseTree = ({
 
     // console.log('1. 获取视频上传信息');
 
-    const {
-      data: {
-        result: { uploadinfo },
-      },
-      status,
-      msg,
-    } = await requestVideoUploadInfo({
+    const result = await requestVideoUploadInfo({
       type: state.spaceType,
       params,
     });
 
+    const { status, msg } = result;
+
     if (status !== 200) return message.error(msg);
 
-    const { metaurl, userid, videoid, servicetype, chunkurl } = uploadinfo;
+    const { metaurl, userid, videoid, servicetype, chunkurl } =
+      result.data.result.uploadinfo;
 
     if (!id) {
       state.fileList = [

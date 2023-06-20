@@ -1,15 +1,23 @@
 import { message } from 'antd';
 import axios from 'axios';
+import { login } from '.';
 import { API, getApi } from './request';
 
 // 课程查询
 export const requestCourse = async (id: string) => {
   try {
-    const res = await axios.get(getApi(API.getCourseDetail(id)), {
-      withCredentials: true,
-    });
+    const res = await axios.post(
+      getApi(API.getCourseDetail(id)),
+      {},
+      {
+        withCredentials: true,
+      },
+    );
 
     if (res.status === 200) {
+      if (res.data.status === 400) {
+        login();
+      }
       return res.data;
     } else {
       message.error(res.statusText);
@@ -23,15 +31,16 @@ export const requestCourse = async (id: string) => {
 // 获取创建课程的基础数据
 export const requestCourseBase = async () => {
   try {
-    const res = await axios.get(getApi(API.getCourseBase), {
-      withCredentials: true,
-    });
+    const res = await axios.post(
+      getApi(API.getCourseBase),
+      {},
+      {
+        withCredentials: true,
+      },
+    );
     if (res.status === 200) {
-      if (typeof res.data === 'string') {
-        return {
-          status: 500,
-          msg: '网络错误，请稍后重试！',
-        };
+      if (res.data.status === 400) {
+        login();
       }
 
       return res.data;
@@ -47,16 +56,17 @@ export const requestCourseBase = async () => {
 // 获取qiniu的token
 export const requestQiniuToken = async () => {
   try {
-    const res = await axios.get(getApi(API.getUploadToken), {
-      withCredentials: true,
-    });
+    const res = await axios.post(
+      getApi(API.getUploadToken),
+      {},
+      {
+        withCredentials: true,
+      },
+    );
 
     if (res.status === 200) {
-      if (typeof res.data === 'string') {
-        return {
-          status: 500,
-          msg: '网络错误，请稍后重试！',
-        };
+      if (res.data.status === 400) {
+        login();
       }
       return res.data;
     } else {
@@ -100,6 +110,9 @@ export const addCourse = async (data: any) => {
     });
 
     if (res.status === 200) {
+      if (res.data.status === 400) {
+        login();
+      }
       return res.data;
     } else {
       message.error(res.statusText);
@@ -118,6 +131,9 @@ export const addLesson = async (data: any) => {
     });
 
     if (res.status === 200) {
+      if (res.data.status === 400) {
+        login();
+      }
       return res.data;
     } else {
       message.error(res.statusText);
@@ -136,6 +152,9 @@ export const addSection = async (data: any) => {
     });
 
     if (res.status === 200) {
+      if (res.data.status === 400) {
+        login();
+      }
       return res.data;
     } else {
       message.error(res.statusText);
@@ -153,6 +172,9 @@ export const updateSection = async (id: string, data: any) => {
       withCredentials: true,
     });
     if (res.status === 200) {
+      if (res.data.status === 400) {
+        login();
+      }
       return res.data;
     } else {
       message.error(res.statusText);
@@ -170,6 +192,9 @@ export const requestCCSignature = async (data: any) => {
       withCredentials: true,
     });
     if (res.status === 200) {
+      if (res.data.status === 400) {
+        login();
+      }
       return res.data;
     } else {
       message.error(res.statusText);
@@ -187,6 +212,9 @@ export const requestVideoCategory = async (data: any) => {
       withCredentials: true,
     });
     if (res.status === 200) {
+      if (res.data.status === 400) {
+        login();
+      }
       return res.data;
     } else {
       message.error(res.statusText);
@@ -204,6 +232,9 @@ export const requestVideoUploadInfo = async (data: any) => {
       withCredentials: true,
     });
     if (res.status === 200) {
+      if (res.data.status === 400) {
+        login();
+      }
       return res.data;
     } else {
       message.error(res.statusText);
@@ -224,6 +255,9 @@ export const saveVideoCCVID = async (data: {
       withCredentials: true,
     });
     if (res.status === 200) {
+      if (res.data.status && res.data.status === 400) {
+        login();
+      }
       return res.data;
     } else {
       message.error(res.statusText);
@@ -241,6 +275,9 @@ export const requestUpdateCourse = async (id: string, data: any) => {
       withCredentials: true,
     });
     if (res.status === 200) {
+      if (res.data.status === 400) {
+        login();
+      }
       return res.data;
     } else {
       message.error(res.statusText);
@@ -258,6 +295,9 @@ export const requestUpdateLesson = async (id: string, data: any) => {
       withCredentials: true,
     });
     if (res.status === 200) {
+      if (res.data.status === 400) {
+        login();
+      }
       return res.data;
     } else {
       message.error(res.statusText);

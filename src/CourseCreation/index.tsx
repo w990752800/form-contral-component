@@ -1,4 +1,5 @@
 import { Spin } from 'antd';
+import 'antd/dist/antd.css';
 import React from 'react';
 import CreateCourse from './components/CreateCourse';
 import useLoadFormData from './hooks/useLoadFormData';
