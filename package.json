@@ -1,6 +1,6 @@
 {
   "name": "gk-form-control",
-  "version": "2.9.0",
+  "version": "3.0.0",
   "description": "课程创建/编辑",
   "license": "MIT",
   "module": "dist/index.js",
