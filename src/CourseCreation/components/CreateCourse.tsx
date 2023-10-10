@@ -40,6 +40,13 @@ const CreateCourse: React.FC<Props> = ({
 }) => {
   const onFinishFailed = (errorInfo: any) => {};
 
+  const getFromValue = () => {
+    if (location.href.indexOf('p-edu') > -1) return '文语课堂';
+    const code = (window as any).__schoolInfo?.code;
+    if (code) return code;
+    return '';
+  };
+
   return (
     <Form
       name="basic"
@@ -50,7 +57,7 @@ const CreateCourse: React.FC<Props> = ({
           ? {
               media_type: '1',
               grade_id: '20',
-              from: '文语课堂',
+              from: getFromValue(),
             }
           : {}
       }

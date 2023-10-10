@@ -1,12 +1,26 @@
 import {
+  DeleteOutlined,
+  ExclamationCircleFilled,
   FormOutlined,
   PlayCircleOutlined,
   PlusOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
-import { Button, message, Popover, Space, Tooltip, Tree, Upload } from 'antd';
+import {
+  Button,
+  message,
+  Modal,
+  Popover,
+  Space,
+  Tooltip,
+  Tree,
+  Upload,
+} from 'antd';
 import type { DataNode, TreeProps } from 'antd/es/tree';
 import React, { useEffect, useState } from 'react';
+import { requestDeleteLesson, requestDeleteSection } from '../utils/http';
+
+const { confirm } = Modal;
 
 type Props = {
   onAddDir: (type: string, name?: string, id?: string) => void;
@@ -14,6 +28,7 @@ type Props = {
   lessons: DataNode[];
   updateSubOrder: (nodeData: any, pos: number) => void;
   editUploadVideo: (file: File, id: string) => void;
+  updateCourseDetail: () => void;
 };
 
 const CourseTree: React.FC<Props> = ({
@@ -22,6 +37,7 @@ const CourseTree: React.FC<Props> = ({
   lessons,
   updateSubOrder,
   editUploadVideo,
+  updateCourseDetail,
 }) => {
   const [gData, setGData] = useState<any[]>([]);
 
@@ -204,6 +220,60 @@ const CourseTree: React.FC<Props> = ({
     return null;
   };
 
+  const onDelDir = (id: string) => {
+    confirm({
+      title: '提示！',
+      icon: <ExclamationCircleFilled />,
+      content: '确定删除此目录？',
+      okText: '确定',
+      okType: 'danger',
+      cancelText: '取消',
+      onOk: async () => {
+        try {
+          const res = await requestDeleteLesson(id);
+          if (res.status === 200) {
+            message.success('删除成功！');
+            updateCourseDetail();
+          } else {
+            message.error(res.msg);
+          }
+        } catch (error: any) {
+          message.error(error.message);
+        }
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  };
+
+  const onDelSub = (id: string) => {
+    confirm({
+      title: '提示！',
+      icon: <ExclamationCircleFilled />,
+      content: '确定删除此小节？',
+      okText: '确定',
+      okType: 'danger',
+      cancelText: '取消',
+      onOk: async () => {
+        try {
+          const res = await requestDeleteSection(id);
+          if (res.status === 200) {
+            message.success('删除成功！');
+            updateCourseDetail();
+          } else {
+            message.error(res.msg);
+          }
+        } catch (error: any) {
+          message.error(error.message);
+        }
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  };
+
   useEffect(() => {
     setGData([...lessons]);
   }, [lessons]);
@@ -278,11 +348,6 @@ const CourseTree: React.FC<Props> = ({
                   {/* <Button
                     size="small"
                     type="text"
-                    icon={<DeleteOutlined />}
-                  ></Button> */}
-                  {/* <Button
-                    size="small"
-                    type="text"
                     icon={<UndoOutlined />}
                   ></Button> */}
                   {!nodeData.lesson_id && (
@@ -296,6 +361,19 @@ const CourseTree: React.FC<Props> = ({
                     </Tooltip>
                   )}
                   {renderVideoLink(nodeData)}
+
+                  <Tooltip title="删除">
+                    <Button
+                      type="text"
+                      size="small"
+                      icon={<DeleteOutlined />}
+                      onClick={() =>
+                        !nodeData.lesson_id
+                          ? onDelDir(nodeData.id)
+                          : onDelSub(nodeData.id)
+                      }
+                    ></Button>
+                  </Tooltip>
                 </Space>
               }
               title=""

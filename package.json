@@ -43,6 +43,9 @@
       "prettier --parser=typescript --write"
     ]
   },
+  "dependencies": {
+    "nexweb": "^4.0.10"
+  },
   "devDependencies": {
     "@ant-design/icons": "^5.1.4",
     "@commitlint/cli": "^17.1.2",
@@ -79,8 +82,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "authors": [],
-  "dependencies": {
-    "nexweb": "^4.0.10"
-  }
+  "authors": []
 }

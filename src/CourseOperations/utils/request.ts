@@ -17,9 +17,17 @@ export const API = {
   saveVideoCCVID: '/courseAdmin/saveVideo',
   updateCourse: (id: string) => `/courseAdmin/updateCourse/${id}`,
   updateLesson: (id: string) => `/courseAdmin/updateLesson/${id}`,
+  deleteLesson: (id: string) => `/courseAdmin/deleteLesson?lesson_id=${id}`,
+  deleteSection: (id: string) => `/courseAdmin/deleteSection?section_id=${id}`,
 };
 
-export const getHttp = () => HTTP;
+export const getHttp = () => {
+  // 判断域名是否包含test
+  if (window.location.host.indexOf('gankaotest2') > -1) {
+    return TEST_HTTP;
+  }
+  return HTTP;
+};
 // process.env.APP_ENV === "production" ? HTTP : TEST_HTTP;
 
 export const getApi = (api: string) => {

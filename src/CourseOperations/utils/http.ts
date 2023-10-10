@@ -307,3 +307,45 @@ export const requestUpdateLesson = async (id: string, data: any) => {
     message.error(error.message);
   }
 };
+
+// 删除目录
+export const requestDeleteLesson = async (id: string) => {
+  try {
+    const res = await axios.post(
+      getApi(API.deleteLesson(id)),
+      {},
+      {
+        withCredentials: true,
+      },
+    );
+    if (res.status === 200) {
+      return res.data;
+    } else {
+      message.error(res.statusText);
+      return null;
+    }
+  } catch (error: any) {
+    message.error(error.message);
+  }
+};
+
+// 删除小节
+export const requestDeleteSection = async (id: string) => {
+  try {
+    const res = await axios.post(
+      getApi(API.deleteSection(id)),
+      {},
+      {
+        withCredentials: true,
+      },
+    );
+    if (res.status === 200) {
+      return res.data;
+    } else {
+      message.error(res.statusText);
+      return null;
+    }
+  } catch (error: any) {
+    message.error(error.message);
+  }
+};

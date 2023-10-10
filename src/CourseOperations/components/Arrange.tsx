@@ -47,25 +47,31 @@ const Arrange: React.FC<Props> = ({
   });
 
   useEffect(() => {
-    if (courseDetail && courseDetail.lessons.length > 0) {
-      const newLessons = courseDetail.lessons?.map((lesson: any) => {
-        return {
-          ...lesson,
-          key: lesson.id,
-          title: lesson.name,
-          children: lesson.section?.map((sub: any) => {
-            return {
-              ...sub,
-              key: sub.id,
-              title: sub.name,
-            };
-          }),
-        };
-      });
+    if (courseDetail) {
+      if (courseDetail.lessons.length > 0) {
+        const newLessons = courseDetail.lessons?.map((lesson: any) => {
+          return {
+            ...lesson,
+            key: lesson.id,
+            title: lesson.name,
+            children: lesson.section?.map((sub: any) => {
+              return {
+                ...sub,
+                key: sub.id,
+                title: sub.name,
+              };
+            }),
+          };
+        });
 
-      setState({
-        newLessons,
-      });
+        setState({
+          newLessons,
+        });
+      } else {
+        setState({
+          newLessons: [],
+        });
+      }
     }
   }, [courseDetail]);
 
@@ -99,6 +105,7 @@ const Arrange: React.FC<Props> = ({
                 lessons={state.newLessons}
                 updateSubOrder={updateSubOrder}
                 editUploadVideo={editUploadVideo}
+                updateCourseDetail={updateCourseDetail}
               />
             </Spin>
           </div>
