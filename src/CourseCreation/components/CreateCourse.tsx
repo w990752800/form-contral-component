@@ -91,8 +91,7 @@ const CreateCourse: React.FC<Props> = ({
             />
           </Form.Item>
         </Col>
-      </Row>
-      <Row gutter={16}>
+
         <Col span={12}>
           <Form.Item
             label="类型"
@@ -103,6 +102,22 @@ const CreateCourse: React.FC<Props> = ({
               <Radio value="1"> 视频 </Radio>
               {/* <Radio value="1"> 音频 </Radio> */}
             </Radio.Group>
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item
+            label="发布范围"
+            name="public_range"
+            rules={[{ required: true, message: '请选择发布范围！' }]}
+          >
+            <Select placeholder="请选择发布范围">
+              <Select.Option key="2" value="2">
+                需授权
+              </Select.Option>
+              <Select.Option key="1" value="1">
+                公开
+              </Select.Option>
+            </Select>
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -136,8 +151,7 @@ const CreateCourse: React.FC<Props> = ({
             </Select>
           </Form.Item>
         </Col>
-      </Row>
-      <Row gutter={16}>
+
         <Col span={12}>
           <Form.Item
             label="科目"
@@ -198,8 +212,6 @@ const CreateCourse: React.FC<Props> = ({
             </Select>
           </Form.Item>
         </Col>
-      </Row>
-      <Row gutter={16}>
         <Col span={12}>
           <Form.Item
             label="课程来源"
@@ -227,6 +239,8 @@ const CreateCourse: React.FC<Props> = ({
               </Select.Option>
             </Select>
           </Form.Item>
+        </Col>
+        <Col span={12}>
           <Form.Item label="简介" name="description">
             <Input.TextArea placeholder="请输入简介" rows={4} allowClear />
           </Form.Item>

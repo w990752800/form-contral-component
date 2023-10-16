@@ -40,6 +40,7 @@ const CourseDetail: React.FC<Props> = ({
     grade_id: '',
     subject_id: '',
     teacher_id: '',
+    public_range: '',
     // 上传图片
     uploadImgLoading: false,
     fileList: [] as UploadFile[],
@@ -89,6 +90,7 @@ const CourseDetail: React.FC<Props> = ({
         grade_id: detail.grade_id,
         subject_id: detail.subject_id,
         teacher_id: detail.teacher_id,
+        public_range: detail.mark_price && detail.mark_price > 0 ? '2' : '1',
         fileList: detail.title_pic
           ? [
               {
@@ -171,6 +173,34 @@ const CourseDetail: React.FC<Props> = ({
                 视频
               </Radio>
             </Radio.Group>
+          </div>
+          <div
+            className="flex items-center"
+            style={{
+              marginBottom: 20,
+            }}
+          >
+            <label className="w-80 text-right">发布范围：</label>
+            <Select
+              className="flex-1 overflow-hidden"
+              size="large"
+              value={state.public_range}
+              onChange={(value) => {
+                setState({
+                  public_range: value,
+                });
+                updateCourse(detail?.id, {
+                  public_range: value,
+                });
+              }}
+            >
+              <Select.Option key="2" value="2">
+                需授权
+              </Select.Option>
+              <Select.Option key="1" value="1">
+                公开
+              </Select.Option>
+            </Select>
           </div>
           <div
             className="flex items-center"

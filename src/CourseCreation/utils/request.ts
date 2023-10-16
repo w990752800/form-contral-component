@@ -29,5 +29,5 @@ export const getHttp = () => {
 // process.env.APP_ENV === "production" ? HTTP : TEST_HTTP;
 
 export const getApi = (api: string) => {
-  return api;
+  return getHttp() + api;
 };
