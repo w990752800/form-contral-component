@@ -48,7 +48,7 @@ const CourseUpload: React.FC<Props> = ({
     type: number;
     noUploadSections: any[];
   }>({
-    type: 1,
+    type: 2,
     noUploadSections: [],
   });
 
@@ -158,7 +158,7 @@ const CourseUpload: React.FC<Props> = ({
               {selectedOptions.length &&
                 selectedOptions.map((option) => option.name).join(' / ')}
             </div>
-            <Button
+            {/* <Button
               type="text"
               onClick={() => {
                 setState({
@@ -167,7 +167,7 @@ const CourseUpload: React.FC<Props> = ({
               }}
             >
               [切换]
-            </Button>
+            </Button> */}
           </div>
           <Dragger {...uploadProps}>
             <p className="ant-upload-drag-icon">

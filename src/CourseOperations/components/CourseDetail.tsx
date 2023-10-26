@@ -90,7 +90,8 @@ const CourseDetail: React.FC<Props> = ({
         grade_id: detail.grade_id,
         subject_id: detail.subject_id,
         teacher_id: detail.teacher_id,
-        public_range: detail.mark_price && detail.mark_price > 0 ? '2' : '1',
+        public_range:
+          detail.marked_price && Number(detail.marked_price) > 0 ? '2' : '1',
         fileList: detail.title_pic
           ? [
               {
@@ -107,8 +108,14 @@ const CourseDetail: React.FC<Props> = ({
 
   return (
     <Spin spinning={updateCourseDetailLoading}>
-      <Row gutter={[16, 16]}>
-        <Col span={12}>
+      <Row gutter={[16, 16]} style={{ width: '550px', marginRight: '20px' }}>
+        <Col span={24}>
+          <div className="flex">
+            <div className="w-80"> </div>
+            <h3 className="text-lg">课程编辑区：</h3>
+          </div>
+        </Col>
+        <Col span={24}>
           <div className="flex items-center">
             <label className="w-80 text-right">名称：</label>
             <Input
@@ -137,7 +144,7 @@ const CourseDetail: React.FC<Props> = ({
             />
           </div>
         </Col>
-        <Col span={12}>
+        <Col span={24}>
           <div className="flex items-center">
             <label className="w-80 text-right">别名：</label>
             <Input
@@ -160,7 +167,7 @@ const CourseDetail: React.FC<Props> = ({
             />
           </div>
         </Col>
-        <Col span={12}>
+        <Col span={24}>
           <div
             className="flex items-center"
             style={{
@@ -319,7 +326,7 @@ const CourseDetail: React.FC<Props> = ({
             <span className="  text-base ">{detail?.from || ''}</span>
           </div>
         </Col>
-        <Col span={12}>
+        <Col span={24}>
           <div className="flex">
             <label className="w-80 text-right">封面：</label>
             <Spin spinning={state.uploadImgLoading}>

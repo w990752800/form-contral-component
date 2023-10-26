@@ -1,5 +1,5 @@
 import { Spin } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 import AddDir from './components/AddDir';
 import AddSub from './components/AddSub';
 import Arrange from './components/Arrange';
@@ -57,7 +57,38 @@ const CourseOperations: React.FC<Props> = ({ id, courseType = '', title }) => {
     editSub,
 
     editUploadVideo,
+    setState,
   } = useCourseTree({ id, getInit, courseDetail, updateCourseDetail });
+
+  useEffect(() => {
+    if (courseDetail) {
+      if (courseDetail && (courseDetail as any).from === '文语课堂') {
+        setState({
+          categoryValue: ['61D88664C00E63A3'], // 默认选中文语课堂视频
+          selectedOptions: [
+            {
+              name: '文语课堂视频',
+              id: '61D88664C00E63A3',
+            },
+          ],
+        });
+      } else {
+        setState({
+          categoryValue: ['E70A042C1C19E1B9', 'C4E945B3C77608CD'], // 默认选中文语课堂视频
+          selectedOptions: [
+            {
+              name: '自习室自制课程',
+              id: 'E70A042C1C19E1B9',
+            },
+            {
+              name: 'sroom-9000001',
+              id: 'C4E945B3C77608CD',
+            },
+          ],
+        });
+      }
+    }
+  }, [courseDetail]);
 
   if (loadBaseData)
     return (
@@ -77,7 +108,6 @@ const CourseOperations: React.FC<Props> = ({ id, courseType = '', title }) => {
   return (
     <div
       style={{
-        maxWidth: '1200px',
         margin: '0 auto 20px',
         padding: '0 20px',
       }}
@@ -93,8 +123,11 @@ const CourseOperations: React.FC<Props> = ({ id, courseType = '', title }) => {
       >
         {title}
       </h1>
-
-      <section>
+      <div
+        style={{
+          display: 'flex',
+        }}
+      >
         <CourseDetail
           detail={courseDetail}
           grades={grades}
@@ -105,7 +138,6 @@ const CourseOperations: React.FC<Props> = ({ id, courseType = '', title }) => {
           courseType={courseType}
         />
         {/* 目录编排 */}
-        <br />
         <Arrange
           onAddDir={onAddDir}
           onAddSub={onAddSub}
@@ -124,7 +156,7 @@ const CourseOperations: React.FC<Props> = ({ id, courseType = '', title }) => {
           editUploadVideo={editUploadVideo}
           updateCourseDetail={updateCourseDetail}
         />
-      </section>
+      </div>
 
       <AddDir
         open={addDirOpen}

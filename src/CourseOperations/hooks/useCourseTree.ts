@@ -209,16 +209,15 @@ const useCourseTree = ({
         type: val,
       });
       if (res.status === 200) {
-        setState({
-          videoCategories: res.data.result.categories,
-          categoryValue: ['61D88664C00E63A3'], // 默认选中文语课堂视频
-          selectedOptions: [
-            {
-              name: '文语课堂视频',
-              id: '61D88664C00E63A3',
-            },
-          ],
-        });
+        if (courseDetail && courseDetail.from === '文语课堂') {
+          setState({
+            videoCategories: res.data.result.categories,
+          });
+        } else {
+          setState({
+            videoCategories: res.data.result.categories,
+          });
+        }
       } else {
         message.error(res.msg);
       }
@@ -495,6 +494,7 @@ const useCourseTree = ({
     editSub: state.editSub,
 
     editUploadVideo,
+    setState,
   };
 };
 

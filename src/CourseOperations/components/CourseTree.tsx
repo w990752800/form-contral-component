@@ -6,16 +6,7 @@ import {
   PlusOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
-import {
-  Button,
-  message,
-  Modal,
-  Popover,
-  Space,
-  Tooltip,
-  Tree,
-  Upload,
-} from 'antd';
+import { Button, Modal, Space, Tooltip, Tree, Upload, message } from 'antd';
 import type { DataNode, TreeProps } from 'antd/es/tree';
 import React, { useEffect, useState } from 'react';
 import { requestDeleteLesson, requestDeleteSection } from '../utils/http';
@@ -279,7 +270,13 @@ const CourseTree: React.FC<Props> = ({
   }, [lessons]);
 
   return (
-    <Space direction="vertical" className="w-full box-border">
+    <Space
+      direction="vertical"
+      className=" box-border"
+      style={{
+        width: '550px',
+      }}
+    >
       <Tree
         allowDrop={(data: any) => {
           if (!data.dragNode.lesson_id) {
@@ -289,8 +286,9 @@ const CourseTree: React.FC<Props> = ({
           if (data.dropPosition < 0) return false;
           return true;
         }}
-        defaultExpandAll
-        showLine
+        autoExpandParent={true}
+        defaultExpandAll={true}
+        showLine={true}
         className="draggable-tree box-border"
         //   defaultExpandedKeys={expandedKeys}
         draggable
@@ -301,87 +299,16 @@ const CourseTree: React.FC<Props> = ({
         // @ts-ignore
         titleRender={(nodeData: any) => {
           return (
-            <Popover
-              content={
-                <Space>
-                  <Tooltip title="编辑">
-                    <Button
-                      type="text"
-                      size="small"
-                      icon={<FormOutlined />}
-                      onClick={() =>
-                        !nodeData.lesson_id
-                          ? onAddDir('edit', nodeData.name, nodeData.id)
-                          : onAddSub(nodeData, 'edit')
-                      }
-                    ></Button>
-                  </Tooltip>
-
-                  {nodeData.lesson_id && (
-                    <Tooltip title="上传替换视频">
-                      <Upload
-                        showUploadList={false}
-                        beforeUpload={(file) => {
-                          const isVideo = file.type.includes('video/');
-
-                          if (!isVideo) {
-                            message.error(`${file.name} 不是一个video/mp4文件`);
-                            return false;
-                          }
-
-                          // 上传视频
-                          editUploadVideo(file, nodeData.id);
-
-                          return false;
-                          return isVideo || Upload.LIST_IGNORE;
-                        }}
-                      >
-                        <Button
-                          type="text"
-                          size="small"
-                          icon={<UploadOutlined />}
-                        ></Button>
-                      </Upload>
-                    </Tooltip>
-                  )}
-
-                  {/* <Button
-                    size="small"
-                    type="text"
-                    icon={<UndoOutlined />}
-                  ></Button> */}
-                  {!nodeData.lesson_id && (
-                    <Tooltip title="追加子节空占位">
-                      <Button
-                        size="small"
-                        type="text"
-                        icon={<PlusOutlined />}
-                        onClick={() => onAddSub(nodeData, 'add')}
-                      ></Button>
-                    </Tooltip>
-                  )}
-                  {renderVideoLink(nodeData)}
-
-                  <Tooltip title="删除">
-                    <Button
-                      type="text"
-                      size="small"
-                      icon={<DeleteOutlined />}
-                      onClick={() =>
-                        !nodeData.lesson_id
-                          ? onDelDir(nodeData.id)
-                          : onDelSub(nodeData.id)
-                      }
-                    ></Button>
-                  </Tooltip>
-                </Space>
-              }
-              title=""
-              trigger="hover"
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
             >
               <Button block type="text" className="text-left">
-                {nodeData.title.length > 18
-                  ? nodeData.title.slice(0, 18) + '...'
+                {nodeData.title.length > 10
+                  ? nodeData.title.slice(0, 10) + '...'
                   : nodeData.title}
                 {nodeData.lesson_id && nodeData.video_id !== '0' && (
                   <span className=" mx-1 text-xs text-cyan-600">
@@ -391,7 +318,79 @@ const CourseTree: React.FC<Props> = ({
 
                 {renderNodeDataStatus(nodeData)}
               </Button>
-            </Popover>
+              <Space>
+                <Tooltip title="编辑">
+                  <Button
+                    type="text"
+                    size="small"
+                    icon={<FormOutlined />}
+                    onClick={() =>
+                      !nodeData.lesson_id
+                        ? onAddDir('edit', nodeData.name, nodeData.id)
+                        : onAddSub(nodeData, 'edit')
+                    }
+                  ></Button>
+                </Tooltip>
+
+                {nodeData.lesson_id && (
+                  <Tooltip title="上传替换视频">
+                    <Upload
+                      showUploadList={false}
+                      beforeUpload={(file) => {
+                        const isVideo = file.type.includes('video/');
+
+                        if (!isVideo) {
+                          message.error(`${file.name} 不是一个video/mp4文件`);
+                          return false;
+                        }
+
+                        // 上传视频
+                        editUploadVideo(file, nodeData.id);
+
+                        return false;
+                        return isVideo || Upload.LIST_IGNORE;
+                      }}
+                    >
+                      <Button
+                        type="text"
+                        size="small"
+                        icon={<UploadOutlined />}
+                      ></Button>
+                    </Upload>
+                  </Tooltip>
+                )}
+
+                {/* <Button
+                    size="small"
+                    type="text"
+                    icon={<UndoOutlined />}
+                  ></Button> */}
+                {!nodeData.lesson_id && (
+                  <Tooltip title="追加子节空占位">
+                    <Button
+                      size="small"
+                      type="text"
+                      icon={<PlusOutlined />}
+                      onClick={() => onAddSub(nodeData, 'add')}
+                    ></Button>
+                  </Tooltip>
+                )}
+                {renderVideoLink(nodeData)}
+
+                <Tooltip title="删除">
+                  <Button
+                    type="text"
+                    size="small"
+                    icon={<DeleteOutlined />}
+                    onClick={() =>
+                      !nodeData.lesson_id
+                        ? onDelDir(nodeData.id)
+                        : onDelSub(nodeData.id)
+                    }
+                  ></Button>
+                </Tooltip>
+              </Space>
+            </div>
           );
         }}
       />
